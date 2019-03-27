@@ -39,6 +39,7 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             junit 'target/surefire-reports/**/*.xml'
+            archiveArtifacts artifacts: 'target/site/jacoco-both/index.html', fingerprint: true
         }
     }
 }
