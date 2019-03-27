@@ -46,17 +46,11 @@ pipeline {
         
         stage ('Sonarcube') {
             steps {
-                sh 'ls' 
+                sh 'mvn sonar:sonar -Dsonar.projectKey=back-endd -Dsonar.organization=kcelestine-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3c1a0d7728eb2d4de7b4684e8d18293ebd7ef91e' 
             }
         }   
         
         stage ('Deploy to Dev') {
-            steps {
-                sh 'ls' 
-            }
-        }  
-        
-        stage ('E2E Test') {
             steps {
                 sh 'ls' 
             }
