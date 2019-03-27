@@ -32,6 +32,41 @@ pipeline {
             }
         }
         
+        stage ('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        
+        stage ('Code Coverage') {
+            steps {
+                sh 'ls' 
+            }
+        }
+        
+        stage ('Sonarcube') {
+            steps {
+                sh 'ls' 
+            }
+        }   
+        
+        stage ('Deploy to Dev') {
+            steps {
+                sh 'ls' 
+            }
+        }  
+        
+        stage ('E2E Test') {
+            steps {
+                sh 'ls' 
+            }
+        }  
+        
+        stage ('Smoke Test') {
+            steps {
+                sh 'ls' 
+            }
+        }  
         
     } // end stages
     
