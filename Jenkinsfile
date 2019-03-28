@@ -31,33 +31,34 @@ pipeline {
                 }
             }
         }
-        
-        stage ('Test') {
-            steps {
-                sh 'mvn test'
+        parallel {
+                stage('Unit Tests & Code Coverage') {
+                    agent {
+                        label "for-branch-a"
+                    }
+                    steps {
+                        sh 'mvn test'
                 
-                publishHTML target: [
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: true,
-            reportDir: 'coverage',
-            reportFiles: 'index.html',
-            reportName: 'RCov Report'
-          ]
-            }
+                        publishHTML target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: 'coverage',
+                            reportFiles: 'index.html',
+                            reportName: 'RCov Report'
+                        ]
+                    }
+                }
+                stage('Sonarcube') {
+                    agent {
+                        label "for-branch-b"
+                    }
+                    steps {
+                        sh 'mvn sonar:sonar -Dsonar.projectKey=back-endd -Dsonar.organization=kcelestine-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3c1a0d7728eb2d4de7b4684e8d18293ebd7ef91e' 
+                    }
+                }
         }
-        
-        stage ('Code Coverage') {
-            steps {
-                sh 'ls' 
-            }
-        }
-        
-        stage ('Sonarcube') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.projectKey=back-endd -Dsonar.organization=kcelestine-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3c1a0d7728eb2d4de7b4684e8d18293ebd7ef91e' 
-            }
-        }   
+  
         
         stage ('Deploy to Dev') {
             steps {
